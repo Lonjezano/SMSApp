@@ -1,0 +1,95 @@
+{% extends 'smsApp/base.html' %}
+{% load crispy_forms_tags %}
+{% block title %} Add Contacts {% endblock %}
+{% block content %}
+<div class="container">
+
+    <div class="row">
+
+        <div class="col-sm-12">
+            <h1 class='text-left'>Add Contact</h1>
+            <div class="form-group">
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <fieldset class="form-group">
+                        {{ form|crispy }}
+
+                        <div id="div_id_CSV_file" class="input-group mb-3">
+                            <div class="custom-file">
+                                <input type="file" name="file" class="custom-file-input" id="id_CSV_file"
+                                aria-describedby="inputGroupFileAddon01">
+                                <label class="custom-file-label" for="id_CSV_file">Choose file</label>
+                            </div>
+                        </div>
+            </div>
+            </fieldset>
+            <div class="form-group">
+                <button class="btn btn-info" type="submit">
+                    Add
+                </button>
+            </div>
+            </form>
+
+        </div>
+
+
+    </div>
+</div>
+</div>
+
+{% endblock %}
+
+
+{% block script %}
+<script>
+// Add the following code if you want the name of the file appear on select
+$( document ).ready(function() {
+    $("#div_id_first_name").attr("hidden",true).removeClass("requiredField");
+    $("#id_first_name").prop("required",false).attr("disabled",true);
+
+    $("#div_id_last_name").attr("hidden",true).removeClass("requiredField");
+    $("#id_last_name").prop("required",false).attr("disabled",true);
+
+    $("#div_id_phone_number").attr("hidden",true).removeClass("requiredField");
+    $("#id_phone_number").prop("required",false).attr("disabled",true);
+
+    $("#div_id_CSV_file").attr("hidden",false);
+    $("#id_CSV_file").attr("required",true);
+
+});
+
+$('#id_entry_type').change(function(){
+  if($(this).val() == 'csv'){
+    $("#div_id_first_name").attr("hidden",true).removeClass("requiredField");
+    $("#id_first_name").prop("required",false).attr("disabled",true);
+
+    $("#div_id_last_name").attr("hidden",true).removeClass("requiredField");
+    $("#id_last_name").prop("required",false).attr("disabled",true);
+
+    $("#div_id_phone_number").attr("hidden",true).removeClass("requiredField");
+    $("#id_phone_number").prop("required",false).attr("disabled",true);
+
+    $("#div_id_CSV_file").attr("hidden",false);
+    $("#id_CSV_file").attr("required",true);
+  }
+  else{
+    $("#div_id_first_name").attr("hidden",false).addClass("requiredField");
+    $("#id_first_name").prop("required",true).attr("disabled",false);
+
+    $("#div_id_last_name").attr("hidden",false).attr("required",true).addClass("requiredField");
+    $("#id_last_name").prop("required",true).attr("disabled",false);
+
+    $("#div_id_phone_number").attr("hidden",false).attr("required",true).addClass("requiredField");
+    $("#id_phone_number").prop("required",true).attr("disabled",false);
+
+    $("#div_id_CSV_file").attr("hidden",true);
+    $("#id_CSV_file").attr("required",false);
+  }
+});
+
+$(".custom-file-input").on("change", function() {
+  var fileName = $(this).val().split("\\").pop();
+  $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+});
+</script>
+{% endblock %}

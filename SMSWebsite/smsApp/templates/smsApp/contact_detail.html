@@ -1,0 +1,48 @@
+{% extends 'smsApp/base.html' %}
+{% load crispy_forms_tags %}
+{% block title %} Contact Details {% endblock %}
+{% block content %}
+<div class="container">
+
+
+    <div class="row">
+        <div class="col-sm-12">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th scope="col">First</th>
+                    <th scope="col">Last</th>
+                    <th scope="col">Number</th>
+                    <th scope="col">Group</th>
+                    <th scope="col"></th>
+
+                </tr>
+                </thead>
+                <tbody>
+
+                <tr class="clickable-row table-row" data-href-template="#"
+                    onclick="window.location.assign('#'">
+
+                    <td>{{ object.first_name }}</td>
+                    <td>{{ object.last_name }}</td>
+                    <td>{{ object.phone_number }}</td>
+                    <td>{{ object.group_name }}</td>
+                    <td>
+                        <a href="{% url 'delete-contact' object.id %}">
+                           <i class="fa fa-trash" style="font-size:24px;color:gray;"></i>
+                        </a>
+                    </td>
+                </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+
+</div>
+
+
+{% endblock %}
+

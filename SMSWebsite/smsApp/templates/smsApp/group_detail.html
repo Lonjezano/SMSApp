@@ -1,0 +1,62 @@
+{% extends 'smsApp/base.html' %}
+{% load crispy_forms_tags %}
+{% block title %} Group Details {% endblock %}
+{% block content %}
+<div class="container">
+
+
+    <div class="row">
+        <div class="col-sm-12">
+            <table class="table table-hover ">
+                <thead>
+                <tr>
+
+                    <th colspan="5" scope="colgroup" class="text-center h1 border-top-0">
+                        <span class="float-right ">
+                            <a href="{% url 'delete-group' object.id %}">
+                        <i class="fa fa-trash" style="font-size:24px;color:gray;z-index:-1"></i>
+                            </a>
+                        </span>
+                        {{ object.group_name }}
+                        <span>
+                            <a href="{% url 'add-contact' %}">
+                           <i class="fa fa-plus" style="font-size:24px;color:gray;"></i>
+                            </a>
+                        </span>
+                    </th>
+
+                </tr>
+
+
+                </thead>
+                <tbody>
+                {% if object.recipient_set.all %}
+                {% for contact in object.recipient_set.all %}
+                <tr class="clickable-row table-row" data-href-template="#"
+                    onclick="window.location.assign('{% url 'contact-detail' contact.id %}');">
+                    <th scope="row">{{ contact.id }}</th>
+                    <td>{{ contact.first_name }}</td>
+                    <td>{{ contact.last_name }}</td>
+                    <td>{{ contact.phone_number }}</td>
+                    <td>{{ contact.group_name }}</td>
+                </tr>
+                {% endfor %}
+                {% else %}
+                <tr>
+                    <td colspan="5" scope="colgroup" class="text-center text-muted">EMPTY</td>
+                </tr>
+                {% endif %}
+
+
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+
+</div>
+
+
+{% endblock %}
+

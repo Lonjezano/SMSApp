@@ -1,0 +1,62 @@
+{% extends 'smsApp/base.html' %}
+{% load crispy_forms_tags %}
+{% block title %} Create SMS {% endblock %}
+{% block content %}
+<div class="container">
+
+    <div class="row">
+
+        <div class="col-sm-12">
+            <h1 class='text-left'>Create SMS</h1>
+            <!--<div class="input-group mb-3">
+                <select class="custom-select" id="id_group_list">
+                    {%for group in groups %}
+                    <option value="{{group.id}}">{{group.group_name}}</option>
+                    {% endfor %}
+                </select>
+            </div>-->
+            <form id="smsForm" method="post" data-contacts-url="{% url 'ajax_load_contacts' %}" novalidate>
+                {% csrf_token %}
+                <fieldset class="form-group">
+                    {{ form|crispy }}
+                </fieldset>
+                <div class="form-group">
+                    <button class="btn btn-info" type="submit">
+                        Send
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
+
+{% block script %}
+<script>
+    $("#id_group_name").change(function () {
+      var url = $("#smsForm").attr("data-contacts-url");  // get the url of the `load_cities` view
+      var contactId = $(this).val();  // get the selected country ID from the HTML input
+
+
+      $.ajax({                       // initialize an AJAX request
+        url: url,                    // set the url of the request (= localhost:8000/hr/ajax/load-cities/)
+        data: {
+          'group_name': contactId       // add the country id to the GET parameters
+        },
+        success: function (data) {   // `data` is the return of the `load_cities` view function
+          $("#id_phone_number").html(data);  // replace the contents of the city input with the data that came from the server
+          var array = []
+          $('#id_phone_number option').each(function(index){
+            array.push(index)
+          });
+          if (array.length == 1){
+            $("#id_phone_number").html('<option value="all">Empty group</option>')
+          }
+        }
+      });
+
+    });
+</script>
+{% endblock %}

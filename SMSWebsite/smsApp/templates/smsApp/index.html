@@ -1,0 +1,10 @@
+{% extends 'smsApp/base.html' %}
+{% block tittle %} SMS App {% endblock %}
+{% block content %}
+    <h3>Form</h3>
+<form action="" method="post">
+    {%csrf_token%}
+    {{form}}
+</form>
+
+{% endblock %}

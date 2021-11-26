@@ -1,0 +1,5 @@
+
+<option value="all">All Contacts</option>
+{% for contact in contacts %}
+<option value="{{ contact.pk }}">{{ contact.phone_number }}</option>
+{% endfor %}
